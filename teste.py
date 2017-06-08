@@ -144,7 +144,9 @@ class player():
 			parent.bind("<Right>",self.direita)
 			parent.bind("<space>",self.bomba)
 	def baixo(self,event):
-		if self.checaposicao(self.img.winfo_x(),self.img.winfo_y()+32,"x"):
+		testando = self.checaposicao(self.img.winfo_x(),self.img.winfo_y()+32,"x")
+		print testando 
+		if testando == True:
 			if event != "baixo":
 				self.master.cli.enviar("baixo")
 			self.lastx=self.img.winfo_x()
@@ -162,7 +164,40 @@ class player():
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
+		elif testando == "morreu1" or testando == "morreu2":
+			self.morreu(testando)
+			if event != "baixo":
+				self.master.cli.enviar("baixo")
+			self.lastx=self.img.winfo_x()
+			self.lasty=self.img.winfo_y()+32
+			if self.play == "primeiro":
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+			else:
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+			self.img.configure(image=img2)
+			self.img.image = img2
+			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
+			
 		self.master.update()
+	def morreu(self,teste):
+		print "aosfuhaisufhaisufhaiosufhio"
+		if teste == "morreu1":
+			texto = "Você Perdeu"
+			toplevel = Toplevel()
+			label1 = Label(toplevel, text=texto, height=5, width=30)
+			label1.pack(side="top")
+		else:
+			texto = "Você Ganhou"
+			toplevel = Toplevel()
+			label1 = Label(toplevel, text=texto, height=5, width=30)
+			label1.pack(side="top")
+
 	def cima(self,event):
 		if self.checaposicao(self.img.winfo_x(),self.img.winfo_y()-32,"x"):
 			if event != "cima":
@@ -335,7 +370,7 @@ class player():
 		return True
 	def checaposicao(self, x, y, caminho):
 		#print self.blocos
-		print self.master.sou,x,y, caminho
+		#print self.master.sou,x,y, caminho
 		if x < 32 or y > 416 or x > 416 or y < 32:
 			return False
 		elif x >= 32 and y >= 32:
@@ -349,6 +384,10 @@ class player():
 					if x == i:
 						if self.master._widgets[teste2+1][teste+1] in self.master.fogo:
 							self.img.destroy()
+							if self.master.sou == "primeiro":
+								return "morreu1"
+							else:
+								return "morreu2"
 							print "pegou fogo"
 						return True
 			elif caminho == "y":
@@ -356,12 +395,20 @@ class player():
 					if y == i:
 						if self.master._widgets[teste2+1][teste+1] in self.master.fogo:
 							self.img.destroy()
+							if self.master.sou == "primeiro":
+								return "morreu1"
+							else:
+								return "morreu2"
 							print "pegou fogo"
 						return True
 			elif caminho == "parado":
 				print teste2+1,teste+1
 				if self.master._widgets[teste2+1][teste+1] in self.master.fogo:
 					self.img.destroy()
+					if self.master.sou == "primeiro":
+						return "morreu1"
+					else:
+						return "morreu2"
 					print "pegou fogo"
 		else:
 			return True
