@@ -129,12 +129,12 @@ class player():
 		else:
 			if check == None:
 				self.img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
-				self.img = Label(self.master, bg="green" image=self.img2)
+				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=416,y=416)
 			else:
 				self.img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
-				self.img = Label(self.master, bg="green" image=self.img2)
+				self.img = Label(self.master, bg="green", image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
 		if check == None:
@@ -150,9 +150,15 @@ class player():
 			self.lastx=self.img.winfo_x()
 			self.lasty=self.img.winfo_y()+32
 			if self.play == "primeiro":
-				img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
 			else:
-				img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
@@ -162,9 +168,15 @@ class player():
 			if event != "cima":
 				self.master.cli.enviar("cima")
 			if self.play == "primeiro":
-				img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
 			else:
-				img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()
@@ -176,9 +188,15 @@ class player():
 			if event != "esquerda":
 				self.master.cli.enviar("esquerda")
 			if self.play == "primeiro":
-				img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
 			else:
-				img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()-32
@@ -190,9 +208,15 @@ class player():
 			if event != "direita":
 				self.master.cli.enviar("direita")
 			if self.play == "primeiro":
-				img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
 			else:
-				img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()+32
