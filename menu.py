@@ -93,12 +93,12 @@ class Menu(Frame):
 		if self.v.get() == 1:
 			self.destroy()
 			app = Carregamento(root,self.v.get())
-			app.master.title("Batalha Naval")
+			app.master.title("Bomber")
 			app.master.geometry("450x240+600+100")
 		elif self.v.get() == 2:
 			self.destroy()
 			app = Carregamento(root,self.v.get())
-			app.master.title("Batalha Naval")
+			app.master.title("Bomber")
 			app.master.geometry("450x240+600+100")
 		elif self.v.get() == 3:
 			t1 = threading.Thread(target=self.servidor2)

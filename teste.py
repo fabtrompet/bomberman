@@ -188,12 +188,12 @@ class player():
 	def morreu(self,teste):
 		print "aosfuhaisufhaisufhaiosufhio"
 		if teste == "morreu1":
-			texto = "Você Perdeu"
+			texto = "Você morreu Perdeu"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
-		else:
-			texto = "Você Ganhou"
+		elif teste == "morreu2":
+			texto = "Você morreu Perdeu"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
