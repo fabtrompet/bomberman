@@ -165,7 +165,6 @@ class player():
 			self.img.image = img2
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
 		elif testando == "morreu1" or testando == "morreu2":
-			self.morreu(testando)
 			if event != "baixo":
 				self.master.cli.enviar("baixo")
 			self.lastx=self.img.winfo_x()
@@ -183,20 +182,40 @@ class player():
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
-			
+			t1 = threading.Thread(target=self.morreu, args=[testando])
+			t1.start()
 		self.master.update()
 	def morreu(self,teste):
 		print "aosfuhaisufhaisufhaiosufhio"
-		if teste == "morreu1":
-			texto = "Você morreu Perdeu"
+		print teste,self.master.sou
+		if teste == "morreu1" and self.master.sou == "primeiro":
+			texto = "Você Perdeu"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
-		elif teste == "morreu2":
-			texto = "Você morreu Perdeu"
+			time.sleep(5)
+			self.master.close()
+		elif teste == "morreu1" and self.master.sou == "segundo":
+			texto = "Você Ganhou"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
+			time.sleep(5)
+			self.master.close()
+		elif teste == "morreu2" and self.master.sou == "segundo":
+			texto = "Você Perdeu"
+			toplevel = Toplevel()
+			label1 = Label(toplevel, text=texto, height=5, width=30)
+			label1.pack(side="top")
+			time.sleep(5)
+			self.master.close()
+		else:
+			texto = "Você Ganhou"
+			toplevel = Toplevel()
+			label1 = Label(toplevel, text=texto, height=5, width=30)
+			label1.pack(side="top")
+			time.sleep(5)
+			self.master.close()
 
 	def cima(self,event):
 		if self.checaposicao(self.img.winfo_x(),self.img.winfo_y()-32,"x"):
@@ -383,8 +402,10 @@ class player():
 				for i in range(32,417,64):
 					if x == i:
 						if self.master._widgets[teste2+1][teste+1] in self.master.fogo:
-							self.img.destroy()
-							if self.master.sou == "primeiro":
+							#self.img.destroy()
+							if self.master.sou == "primeiro" and self.outro == None:
+								return "morreu1"
+							elif self.master.sou == "segundo" and self.outro != None:
 								return "morreu1"
 							else:
 								return "morreu2"
@@ -394,8 +415,10 @@ class player():
 				for i in range(32,417,64):
 					if y == i:
 						if self.master._widgets[teste2+1][teste+1] in self.master.fogo:
-							self.img.destroy()
-							if self.master.sou == "primeiro":
+							#self.img.destroy()
+							if self.master.sou == "primeiro" and self.outro == None:
+								return "morreu1"
+							elif self.master.sou == "segundo" and self.outro != None:
 								return "morreu1"
 							else:
 								return "morreu2"
@@ -404,9 +427,11 @@ class player():
 			elif caminho == "parado":
 				print teste2+1,teste+1
 				if self.master._widgets[teste2+1][teste+1] in self.master.fogo:
-					self.img.destroy()
-					if self.master.sou == "primeiro":
+					#self.img.destroy()
+					if self.master.sou == "primeiro" and self.outro == None:
 						return "morreu1"
+					elif self.master.sou == "segundo" and self.outro != None:
+								return "morreu1"
 					else:
 						return "morreu2"
 					print "pegou fogo"
