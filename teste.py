@@ -16,6 +16,7 @@ class Bomber(Frame):
 		self.sou=0
 		rows=15
 		columns=15
+		self.blocosespecial = []
 		#Frame.__init__(self,parent)
 		cont=1
 		self.blocos=[]
@@ -54,6 +55,7 @@ class Bomber(Frame):
 							label.grid(row=row, column=column, sticky="nsew")
 						elif true == 9:
 							self.blocos.append((column,row))
+							self.blocosespecial.append((column,row))
 							label.configure(bg="white")
 							label.grid(row=row, column=column, sticky="nsew")
 						else:
@@ -121,22 +123,30 @@ class player():
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
+				self.lastx=self.img.winfo_x()
+				self.lasty=self.img.winfo_y()
 			else:
 				self.img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
-				self.img.place(x=416,y=416)				
+				self.img.place(x=416,y=416)
+				self.lastx=self.img.winfo_x()
+				self.lasty=self.img.winfo_y()				
 		else:
 			if check == None:
 				self.img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=416,y=416)
+				self.lastx=self.img.winfo_x()
+				self.lasty=self.img.winfo_y()
 			else:
 				self.img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
 				self.img = Label(self.master, bg="green", image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
+				self.lastx=self.img.winfo_x()
+				self.lasty=self.img.winfo_y()
 		if check == None:
 			parent.bind("<Down>",self.baixo)
 			parent.bind("<Up>",self.cima)
@@ -346,7 +356,6 @@ class player():
 		self.testabomba=1
 		try:
 			self.master.blocos.remove((teste,teste2))
-			
 		except:
 			pass
 		try:
