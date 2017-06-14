@@ -97,15 +97,15 @@ class Bomber(Frame):
 	def conexao2(self):
 		while 1:
 			resposta = self.cli.receber()
-			if resposta == "baixo":
+			if resposta == "000": #000
 				self.play2.baixo("baixo")
-			elif resposta == "cima":
+			elif resposta == "001": #001
 				self.play2.cima("cima")
-			elif resposta == "esquerda":
+			elif resposta == "010": #010
 				self.play2.esquerda("esquerda")
-			elif resposta == "direita":
+			elif resposta == "011":#011
 				self.play2.direita("direita")
-			elif resposta == "bomba":
+			elif resposta == "100":#100
 				self.play2.bomba("bomba")
 	def close(self):
 		os._exit(0)
@@ -158,7 +158,7 @@ class player():
 		print testando 
 		if testando == True:
 			if event != "baixo":
-				self.master.cli.enviar("baixo")
+				self.master.cli.enviar("000")
 			self.lastx=self.img.winfo_x()
 			self.lasty=self.img.winfo_y()+32
 			if self.play == "primeiro":
@@ -176,7 +176,7 @@ class player():
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
 		elif testando == "morreu1" or testando == "morreu2":
 			if event != "baixo":
-				self.master.cli.enviar("baixo")
+				self.master.cli.enviar("000")
 			self.lastx=self.img.winfo_x()
 			self.lasty=self.img.winfo_y()+32
 			if self.play == "primeiro":
@@ -230,7 +230,7 @@ class player():
 	def cima(self,event):
 		if self.checaposicao(self.img.winfo_x(),self.img.winfo_y()-32,"x"):
 			if event != "cima":
-				self.master.cli.enviar("cima")
+				self.master.cli.enviar("001")
 			if self.play == "primeiro":
 				if self.outro == None:
 					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
@@ -250,7 +250,7 @@ class player():
 	def esquerda(self,event):
 		if self.checaposicao(self.img.winfo_x()-32,self.img.winfo_y(),"y"):
 			if event != "esquerda":
-				self.master.cli.enviar("esquerda")
+				self.master.cli.enviar("010")
 			if self.play == "primeiro":
 				if self.outro == None:
 					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
@@ -270,7 +270,7 @@ class player():
 	def direita(self,event):
 		if self.checaposicao(self.img.winfo_x()+32,self.img.winfo_y(),"y"):
 			if event != "direita":
-				self.master.cli.enviar("direita")
+				self.master.cli.enviar("011")
 			if self.play == "primeiro":
 				if self.outro == None:
 					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
@@ -290,7 +290,7 @@ class player():
 	def bomba(self,event):
 		if self.testabomba == 1:
 			if event != "bomba":
-				self.master.cli.enviar("bomba")
+				self.master.cli.enviar("100")
 			t1 = Thread(target=self.bomba2)
 			t1.start()
 	def bomba2(self):

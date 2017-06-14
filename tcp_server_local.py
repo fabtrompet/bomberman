@@ -97,10 +97,24 @@ class servidor():
             else:
                 print sentence
                 num = self.usuarios.index(connectionSocket)
-                if (num % 2) == 0:
-                    self.usuarios[num+1].send(sentence)
-                else:
-                    self.usuarios[num-1].send(sentence)
+                if len(sentence) > 3:
+                    texto=""
+                    cont=0
+                    for i in len(sentence):
+                        texto=texto+sentence[i]
+                        if cont == 2:
+                            if (num % 2) == 0:
+                                self.usuarios[num+1].send(texto)
+                            else:
+                                self.usuarios[num-1].send(texto)
+                            cont=0
+                            texto=""
+                        cont+=1
+                else:      
+                    if (num % 2) == 0:
+                        self.usuarios[num+1].send(sentence)
+                    else:
+                        self.usuarios[num-1].send(sentence)
 
         connectionSocket.close()
         thread.exit()
