@@ -95,18 +95,41 @@ class Bomber(Frame):
 		#label1 = Label(toplevel, text=texto, height=5, width=30)
 		#label1.pack(side="top")
 	def conexao2(self):
+		testeeeeee=[]
 		while 1:
 			resposta = self.cli.receber()
-			if resposta == "000": #000
-				self.play2.baixo("baixo")
-			elif resposta == "001": #001
-				self.play2.cima("cima")
-			elif resposta == "010": #010
-				self.play2.esquerda("esquerda")
-			elif resposta == "011":#011
-				self.play2.direita("direita")
-			elif resposta == "100":#100
-				self.play2.bomba("bomba")
+			print type(resposta)
+			if len(resposta) > 3:
+				testeeeeee.append(resposta)
+				texto=""
+				for x in testeeeeee:
+					for i in range(len(x)):
+						texto=texto+x[i]
+						if len(texto) == 3:
+							resposta2=texto
+							if resposta2 == "000": #000
+								self.play2.baixo("baixo")
+							elif resposta2 == "001": #001
+								self.play2.cima("cima")
+							elif resposta2 == "010": #010
+								self.play2.esquerda("esquerda")
+							elif resposta2 == "011":#011
+								self.play2.direita("direita")
+							elif resposta2 == "100":#100
+								self.play2.bomba("bomba")
+							texto=""
+					testeeeeee.remove(x)
+			else:
+				if resposta == "000": #000
+					self.play2.baixo("baixo")
+				elif resposta == "001": #001
+					self.play2.cima("cima")
+				elif resposta == "010": #010
+					self.play2.esquerda("esquerda")
+				elif resposta == "011":#011
+					self.play2.direita("direita")
+				elif resposta == "100":#100
+					self.play2.bomba("bomba")
 	def close(self):
 		os._exit(0)
 
@@ -228,7 +251,8 @@ class player():
 			self.master.close()
 
 	def cima(self,event):
-		if self.checaposicao(self.img.winfo_x(),self.img.winfo_y()-32,"x"):
+		testando = self.checaposicao(self.img.winfo_x(),self.img.winfo_y()-32,"x")
+		if testando == True:
 			if event != "cima":
 				self.master.cli.enviar("001")
 			if self.play == "primeiro":
@@ -246,9 +270,30 @@ class player():
 			self.lastx=self.img.winfo_x()
 			self.lasty=self.img.winfo_y()-32
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()-32)
+		elif testando == "morreu1" or testando == "morreu2":
+			if event != "cima":
+				self.master.cli.enviar("001")
+			if self.play == "primeiro":
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+			else:
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+			self.img.configure(image=img2)
+			self.img.image = img2
+			self.lastx=self.img.winfo_x()
+			self.lasty=self.img.winfo_y()-32
+			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()-32)
+			t1 = threading.Thread(target=self.morreu, args=[testando])
+			t1.start()
 		self.master.update()
 	def esquerda(self,event):
-		if self.checaposicao(self.img.winfo_x()-32,self.img.winfo_y(),"y"):
+		testando = self.checaposicao(self.img.winfo_x()-32,self.img.winfo_y(),"y")
+		if testando == True:
 			if event != "esquerda":
 				self.master.cli.enviar("010")
 			if self.play == "primeiro":
@@ -266,9 +311,30 @@ class player():
 			self.lastx=self.img.winfo_x()-32
 			self.lasty=self.img.winfo_y()
 			self.img.place(x=self.img.winfo_x()-32,y=self.img.winfo_y())
+		elif testando == "morreu1" or testando == "morreu2":
+			if event != "esquerda":
+				self.master.cli.enviar("010")
+			if self.play == "primeiro":
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+			else:
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+			self.img.configure(image=img2)
+			self.img.image = img2
+			self.lastx=self.img.winfo_x()-32
+			self.lasty=self.img.winfo_y()
+			self.img.place(x=self.img.winfo_x()-32,y=self.img.winfo_y())
+			t1 = threading.Thread(target=self.morreu, args=[testando])
+			t1.start()
 		self.master.update()
 	def direita(self,event):
-		if self.checaposicao(self.img.winfo_x()+32,self.img.winfo_y(),"y"):
+		testando = self.checaposicao(self.img.winfo_x()+32,self.img.winfo_y(),"y")
+		if testando == True:
 			if event != "direita":
 				self.master.cli.enviar("011")
 			if self.play == "primeiro":
@@ -286,6 +352,26 @@ class player():
 			self.lastx=self.img.winfo_x()+32
 			self.lasty=self.img.winfo_y()
 			self.img.place(x=self.img.winfo_x()+32,y=self.img.winfo_y())
+		elif testando == "morreu1" or testando == "morreu2":
+			if event != "direita":
+				self.master.cli.enviar("011")
+			if self.play == "primeiro":
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+			else:
+				if self.outro == None:
+					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+				else:
+					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+			self.img.configure(image=img2)
+			self.img.image = img2
+			self.lastx=self.img.winfo_x()+32
+			self.lasty=self.img.winfo_y()
+			self.img.place(x=self.img.winfo_x()+32,y=self.img.winfo_y())
+			t1 = threading.Thread(target=self.morreu, args=[testando])
+			t1.start()
 		self.master.update()
 	def bomba(self,event):
 		if self.testabomba == 1:

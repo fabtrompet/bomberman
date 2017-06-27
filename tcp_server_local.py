@@ -46,7 +46,7 @@ class servidor():
     def receber(self,connectionSocket, addr):
         while 1:
             sentence = connectionSocket.recv(1024)
-            print sentence
+            #print sentence
             if sentence == "quemjoga":
                 time.sleep(randint(1,5))
                 self.quemjoga(connectionSocket)
@@ -95,22 +95,21 @@ class servidor():
                     raise e
 
             else:
-                print sentence
+                print "mensagem que recebe",sentence
                 num = self.usuarios.index(connectionSocket)
                 if len(sentence) > 3:
                     texto=""
-                    cont=0
-                    for i in len(sentence):
+                    for i in range(len(sentence)):
                         texto=texto+sentence[i]
-                        if cont == 2:
+                        if len(texto) == 3:
+                            print "mensagem que envia",texto
                             if (num % 2) == 0:
                                 self.usuarios[num+1].send(texto)
                             else:
                                 self.usuarios[num-1].send(texto)
-                            cont=0
                             texto=""
-                        cont+=1
-                else:      
+                else:
+                    print "mensagem",sentence
                     if (num % 2) == 0:
                         self.usuarios[num+1].send(sentence)
                     else:
