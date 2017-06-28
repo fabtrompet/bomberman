@@ -56,7 +56,7 @@ class Bomber(Frame):
 						elif true == 9:
 							self.blocos.append((column,row))
 							self.blocosespecial.append((column,row))
-							label.configure(bg="white")
+							label.configure(bg="blue")
 							label.grid(row=row, column=column, sticky="nsew")
 						else:
 							label.configure(bg="green")
