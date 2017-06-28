@@ -149,7 +149,7 @@ class player():
 				self.lastx=self.img.winfo_x()
 				self.lasty=self.img.winfo_y()
 			else:
-				self.img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+				self.img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play23.gif'))
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=416,y=416)
@@ -157,14 +157,14 @@ class player():
 				self.lasty=self.img.winfo_y()				
 		else:
 			if check == None:
-				self.img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+				self.img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play23.gif'))
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=416,y=416)
 				self.lastx=self.img.winfo_x()
 				self.lasty=self.img.winfo_y()
 			else:
-				self.img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+				self.img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play13.gif'))
 				self.img = Label(self.master, bg="green", image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
@@ -186,14 +186,14 @@ class player():
 			self.lasty=self.img.winfo_y()+32
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play13.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play23.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play23.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play13.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
@@ -204,14 +204,14 @@ class player():
 			self.lasty=self.img.winfo_y()+32
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play13.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play23.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play23.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play23.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play13.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play13.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.img.place(x=self.img.winfo_x(),y=self.img.winfo_y()+32)
@@ -257,14 +257,14 @@ class player():
 				self.master.cli.enviar("001")
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play11.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play21.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play21.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play11.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()
@@ -275,14 +275,14 @@ class player():
 				self.master.cli.enviar("001")
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play11.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play21.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play21.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play21.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play11.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play11.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()
@@ -298,14 +298,14 @@ class player():
 				self.master.cli.enviar("010")
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play14.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play24.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play24.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play14.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()-32
@@ -316,14 +316,14 @@ class player():
 				self.master.cli.enviar("010")
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play14.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play24.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play24.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play24.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play14.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play14.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()-32
@@ -339,14 +339,14 @@ class player():
 				self.master.cli.enviar("011")
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play12.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play22.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play22.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play12.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()+32
@@ -357,14 +357,14 @@ class player():
 				self.master.cli.enviar("011")
 			if self.play == "primeiro":
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play12.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play22.gif'))
 			else:
 				if self.outro == None:
-					img2 = ImageTk.PhotoImage(Image.open('play22.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play22.gif'))
 				else:
-					img2 = ImageTk.PhotoImage(Image.open('play12.gif'))
+					img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play12.gif'))
 			self.img.configure(image=img2)
 			self.img.image = img2
 			self.lastx=self.img.winfo_x()+32
@@ -381,7 +381,7 @@ class player():
 			t1.start()
 	def bomba2(self):
 		self.testabomba=0
-		self.img2 = ImageTk.PhotoImage(Image.open('bomba.gif'))
+		self.img2 = ImageTk.PhotoImage(Image.open('/usr/bin/bomba.gif'))
 		self.img3 = Label(self.master,bg='green',image=self.img2)
 		self.img3.image=self.img2
 		self.img3.place(x=self.lastx,y=self.lasty)

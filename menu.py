@@ -28,7 +28,7 @@ class Carregamento(Frame):
 		while True:
 			try:
 				time.sleep(0.04)
-				img = PhotoImage(file="radio.gif", format="gif - {}".format(self.num))
+				img = PhotoImage(file="/usr/bin/radio.gif", format="gif - {}".format(self.num))
 				self.label.config(image=img)
 				self.label.image=img
 			
