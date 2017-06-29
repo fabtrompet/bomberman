@@ -142,6 +142,7 @@ class player():
 		self.play = play
 		if play == "primeiro":
 			if check == None:
+				self.img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play13.gif'))
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
