@@ -142,7 +142,6 @@ class player():
 		self.play = play
 		if play == "primeiro":
 			if check == None:
-				self.img2 = ImageTk.PhotoImage(Image.open("play13.gif"))
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
@@ -461,10 +460,19 @@ class player():
 		except:
 			pass
 		try:
-			self.master.play1.checaposicao(self.master.play1.lastx,self.master.play1.lasty,"parado")
-			self.master.play2.checaposicao(self.master.play2.lastx,self.master.play2.lasty,"parado")
+			testando=self.master.play1.checaposicao(self.master.play1.lastx,self.master.play1.lasty,"parado")
+			if testando == "morreu1" or testando == "morreu2":
+				t1 = threading.Thread(target=self.morreu, args=[testando])
+				t1.start()
 		except:
 			pass	
+		try:
+			testando=self.master.play2.checaposicao(self.master.play2.lastx,self.master.play2.lasty,"parado")
+			if testando == "morreu1" or testando == "morreu2":
+				t1 = threading.Thread(target=self.morreu, args=[testando])
+				t1.start()
+		except:
+			pass
 		#self.checaposicao(self.lastx,self.lasty, "parado")	
 		time.sleep(1)	
 		if veri:
@@ -526,7 +534,7 @@ class player():
 					if self.master.sou == "primeiro" and self.outro == None:
 						return "morreu1"
 					elif self.master.sou == "segundo" and self.outro != None:
-								return "morreu1"
+						return "morreu1"
 					else:
 						return "morreu2"
 					print "pegou fogo"
