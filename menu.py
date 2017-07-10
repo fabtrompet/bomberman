@@ -4,14 +4,15 @@ import os
 from broadcast_client import *
 from tcp_server_local import *
 from tcp_client import *
-from teste import Bomber
+from teste import Bomberman
 class Carregamento(Frame):
-	def __init__(self, parent, op):
+	def __init__(self, parent, op, nick):
 		Frame.__init__(self,parent)
 		self.pack(fill=BOTH)
 		root.protocol("WM_DELETE_WINDOW", self.close)
 		self.num = 0
 		self.op = op
+		self.nick=nick
 		self.tela()
 		self.create_widgets()
 		
@@ -45,10 +46,10 @@ class Carregamento(Frame):
 				self.destroy()
 				self.cli.enviar("sorteio")
 				resposta = self.cli.receber()
-				app = Bomber(root,resposta,self.cli)
+				app = Bomberman(root,resposta,self.cli,self.nick)
 				#t1 = threading.Thread(target=app.conexao, args=[self.cli])
 				#t1.start()
-				app.master.title("Bomber")
+				app.master.title("Bomberman")
 				app.master.geometry("480x480+600+100")
 				app.master.resizable(width=False, height=False)
 		else:
@@ -62,10 +63,10 @@ class Carregamento(Frame):
 				self.destroy()
 				self.cli.enviar("sorteio")
 				resposta = self.cli.receber()
-				app = Bomber(root,resposta,self.cli)
+				app = Bomberman(root,resposta,self.cli,self.nick)
 				#t1 = threading.Thread(target=app.conexao, args=[self.cli])
 				#t1.start()
-				app.master.title("Bomber")
+				app.master.title("Bomberman")
 				app.master.geometry("480x480+600+100")
 				app.master.resizable(width=False, height=False)
 	def close(self):
@@ -87,19 +88,32 @@ class Menu(Frame):
 		self.servidor1 = Radiobutton(self, text="Ser o Servidor",variable=self.v, value=3)
 		self.servidor1.place(x=10,y=90)
 
-		self.Button1=Button(self.master, text="Selecione", command=self.seleciona)
+		self.Button1=Button(self.master, text="Selecione", command=self.seleciona2)
 		self.Button1.place(x=20,y=110)
-	def seleciona(self):
+
+	def seleciona2(self):
 		if self.v.get() == 1:
-			self.destroy()
-			app = Carregamento(root,self.v.get())
-			app.master.title("Bomber")
-			app.master.geometry("450x240+600+100")
+			self.textexterno = Label(self, text="Nick:")
+			self.textexterno.place(x=250,y=50)
+			self.nickexterno = Entry(self, width="10")
+			self.nickexterno.place(x=290,y=50)
+			self.servidorexterno['state'] = 'disabled'
+			self.servidorlocal['state'] = 'disabled'
+			self.servidor1['state'] = 'disabled'
+			self.Button1.destroy()
+			self.Button1=Button(self.master, text="Selecione seu nick", command=self.seleciona)
+			self.Button1.place(x=20,y=110)
 		elif self.v.get() == 2:
-			self.destroy()
-			app = Carregamento(root,self.v.get())
-			app.master.title("Bomber")
-			app.master.geometry("450x240+600+100")
+			self.textexterno = Label(self, text="Nick:")
+			self.textexterno.place(x=250,y=50)
+			self.nickexterno = Entry(self, width="10")
+			self.nickexterno.place(x=290,y=50)
+			self.servidorexterno['state'] = 'disabled'
+			self.servidorlocal['state'] = 'disabled'
+			self.servidor1['state'] = 'disabled'
+			self.Button1.destroy()
+			self.Button1=Button(self.master, text="Selecione seu nick", command=self.seleciona)
+			self.Button1.place(x=20,y=110)
 		elif self.v.get() == 3:
 			t1 = threading.Thread(target=self.servidor2)
 			t1.start()
@@ -109,6 +123,19 @@ class Menu(Frame):
 			self.servidor1['state'] = 'disabled'
 			self.texto = Label(self,text="Servidor On!")
 			self.texto.pack()
+	def seleciona(self):
+		if self.v.get() == 1:
+			nick = self.nickexterno.get()
+			self.destroy()
+			app = Carregamento(root,self.v.get(),nick)
+			app.master.title("Bomberman")
+			app.master.geometry("450x240+600+100")
+		elif self.v.get() == 2:
+			nick = self.nickexterno.get()
+			self.destroy()
+			app = Carregamento(root,self.v.get(),nick)
+			app.master.title("Bomberman")
+			app.master.geometry("450x240+600+100")
 	def servidor2(self):
 		servidor()
 	def close(self):

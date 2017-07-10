@@ -7,13 +7,14 @@ import os
 from threading import Thread
 import time
 from random import randint
-class Bomber(Frame):
-	def __init__(self, parent,numeros, con):
+class Bomberman(Frame):
+	def __init__(self, parent,numeros, con, nick):
 		Frame.__init__(self, parent)
 		self.fogo=[]
 		numeros = numeros.split("/")
 		self.cli=con
 		self.sou=0
+		self.nick=nick
 		rows=15
 		columns=15
 		self.blocosespecial = []
@@ -98,28 +99,60 @@ class Bomber(Frame):
 		testeeeeee=[]
 		while 1:
 			resposta = self.cli.receber()
-			print type(resposta)
-			if len(resposta) > 3:
+			print "to recebendo",resposta
+			columns=2
+			if resposta[:4] == "nick":
+				ranking=resposta.split("\n")
+				ranking2=[]
+				for i in range(len(ranking)-1):
+					if i != 0:
+						ranking2.append("tempo="+ranking[i].split(";")[1].split("=")[1]+";nick="+ranking[i].split(";")[0].split("=")[1])
+					else:
+						ranking2.append(ranking[0])
+				ranking2.sort()
+				print ranking2	
+				toplevel = Toplevel(bg="black")
+				toplevel.title("Ranking")
+				widgets=[]
+				for row in range(len(ranking)-1):
+					current_row = []
+					numteste=1
+					vasf=0
+					for column in range(columns):
+						if row == 0 and vasf == 0:
+							numteste=0
+						if row == 0 and vasf == 1:
+							numteste=1
+						print numteste
+						label = Label(toplevel,borderwidth=2,width=20,text=ranking2[row].split(";")[numteste].split("=")[1])
+						label.configure(bg="gray")
+						label.grid(row=row, column=column, sticky="nsew",padx=1, pady=1)
+						vasf=1
+						numteste-=1
+					current_row.append(label)
+				widgets.append(current_row)
+				self.play1.img.destroy()
+				self.play2.img.destroy()
+			elif len(resposta) > 3:
 				testeeeeee.append(resposta)
-				texto=""
 				for x in testeeeeee:
-					for i in range(len(x)):
-						texto=texto+x[i]
-						if len(texto) == 3:
-							resposta2=texto
-							if resposta2 == "000": #000
-								self.play2.baixo("baixo")
-							elif resposta2 == "001": #001
-								self.play2.cima("cima")
-							elif resposta2 == "010": #010
-								self.play2.esquerda("esquerda")
-							elif resposta2 == "011":#011
-								self.play2.direita("direita")
-							elif resposta2 == "100":#100
-								self.play2.bomba("bomba")
-							texto=""
+					for i in range(0,len(x),3):
+						texto=x[i:i+3]
+						resposta2=texto
+						print "executando",resposta2
+						if resposta2 == "000": #000
+							self.play2.baixo("baixo")
+						elif resposta2 == "001": #001
+							self.play2.cima("cima")
+						elif resposta2 == "010": #010
+							self.play2.esquerda("esquerda")
+						elif resposta2 == "011":#011
+							self.play2.direita("direita")
+						elif resposta2 == "100":#100
+							self.play2.bomba("bomba")
 					testeeeeee.remove(x)
 			else:
+				print "executando",resposta
 				if resposta == "000": #000
 					self.play2.baixo("baixo")
 				elif resposta == "001": #001
@@ -176,9 +209,9 @@ class player():
 			parent.bind("<Left>",self.esquerda)
 			parent.bind("<Right>",self.direita)
 			parent.bind("<space>",self.bomba)
+		self.inicio = int(time.strftime("%s"))
 	def baixo(self,event):
 		testando = self.checaposicao(self.img.winfo_x(),self.img.winfo_y()+32,"x")
-		print testando 
 		if testando == True:
 			if event != "baixo":
 				self.master.cli.enviar("000")
@@ -219,37 +252,64 @@ class player():
 			t1.start()
 		self.master.update()
 	def morreu(self,teste):
-		print "aosfuhaisufhaisufhaiosufhio"
-		print teste,self.master.sou
+		self.fim = int(time.strftime("%s"))
 		if teste == "morreu1" and self.master.sou == "primeiro":
 			texto = "Você Perdeu"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
 			time.sleep(5)
-			self.master.close()
+			self.master.cli.enviar("acabou")
+			toplevel.destroy()
+			#self.master.close()
 		elif teste == "morreu1" and self.master.sou == "segundo":
+			score=self.fim-self.inicio
+			score=self.transform(score)
+			self.master.cli.enviar("nick="+self.master.nick+";tempo="+score)
 			texto = "Você Ganhou"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
 			time.sleep(5)
-			self.master.close()
+			toplevel.destroy()
+			
 		elif teste == "morreu2" and self.master.sou == "segundo":
 			texto = "Você Perdeu"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
 			time.sleep(5)
-			self.master.close()
+			self.master.cli.enviar("acabou")
+			toplevel.destroy()
 		else:
+			score=self.fim-self.inicio
+			score=self.transform(score)
+			self.master.cli.enviar("nick="+self.master.nick+";tempo="+score)
 			texto = "Você Ganhou"
 			toplevel = Toplevel()
 			label1 = Label(toplevel, text=texto, height=5, width=30)
 			label1.pack(side="top")
 			time.sleep(5)
-			self.master.close()
-
+			toplevel.destroy()
+	def transform(self,segundos):
+		segundos_rest = segundos % 86400
+		horas = segundos_rest // 3600
+		segundos_rest = segundos_rest % 3600
+		minutos = segundos_rest // 60
+		segundos_rest = segundos_rest % 60
+		if len(str(horas)) == 1:
+			horas="0"+str(horas)
+		else:
+			horas=str(horas)
+		if len(str(minutos)) == 1:
+			minutos="0"+str(minutos)
+		else:
+			minutos=str(minutos)
+		if len(str(segundos_rest)) == 1:
+			segundos_rest="0"+str(segundos_rest)
+		else:
+			segundos_rest=str(segundos_rest)
+		return horas+":"+minutos+":"+segundos_rest
 	def cima(self,event):
 		testando = self.checaposicao(self.img.winfo_x(),self.img.winfo_y()-32,"x")
 		if testando == True:

@@ -3,6 +3,7 @@ from random import randint
 from broadcast_server import *
 from socket import *
 import time
+import getpass
 class servidor(): 
     def __init__(self):
         self.serverPort = 12000
@@ -93,21 +94,41 @@ class servidor():
                             thread.exit()
                 except Exception as e:
                     raise e
-
+            elif sentence[:4] == "nick":
+                user=getpass.getuser()
+                try:
+                    arq = open("/home/"+user+"/.ranking.txt", "r")
+                    texto = arq.read()
+                    arq.close()
+                except:
+                    texto="nick=Nick;tempo=Menor Tempo\n"
+                    pass
+                arq = open("/home/"+user+"/.ranking.txt", "w")
+                texto=texto+sentence+"\n"
+                arq.write(texto)
+                arq.close()
+            elif sentence == "acabou":
+                user=getpass.getuser()
+                arq = open("/home/"+user+"/.ranking.txt", "r")
+                texto = arq.read()
+                num = self.usuarios.index(connectionSocket)
+                if (num % 2) == 0:
+                    self.usuarios[num+1].send(texto)
+                    self.usuarios[num].send(texto)
+                else:
+                    self.usuarios[num-1].send(texto)
+                    self.usuarios[num].send(texto)
+                arq.close()
             else:
                 print "mensagem que recebe",sentence
                 num = self.usuarios.index(connectionSocket)
                 if len(sentence) > 3:
-                    texto=""
-                    for i in range(len(sentence)):
-                        texto=texto+sentence[i]
-                        if len(texto) == 3:
-                            print "mensagem que envia",texto
-                            if (num % 2) == 0:
-                                self.usuarios[num+1].send(texto)
-                            else:
-                                self.usuarios[num-1].send(texto)
-                            texto=""
+                    for i in range(0,len(sentence),3):
+                        texto=sentence[i:i+3]
+                        if (num % 2) == 0:
+                            self.usuarios[num+1].send(texto)
+                        else:
+                            self.usuarios[num-1].send(texto)
                 else:
                     print "mensagem",sentence
                     if (num % 2) == 0:
