@@ -60,9 +60,7 @@ class servidor():
             elif sentence == "entrei":
                 self.usuarios.append(connectionSocket)
                 self.tudocerto()
-                print 'Novo usuario',addr
             elif sentence == "sorteio":
-                print "sorteando"
                 self.play(connectionSocket)
             elif sentence == "":
                 try:
@@ -98,15 +96,31 @@ class servidor():
                 user=getpass.getuser()
                 try:
                     arq = open("/home/"+user+"/.ranking.txt", "r")
-                    texto = arq.read()
+                    texto = arq.readlines()
                     arq.close()
                 except:
                     texto="nick=Nick;tempo=Menor Tempo\n"
+                    arq = open("/home/"+user+"/.ranking.txt", "w")
+                    arq.write(texto)
+                    arq.close()
+                    arq = open("/home/"+user+"/.ranking.txt", "r")
+                    texto = arq.readlines()
+                    arq.close()
                     pass
-                arq = open("/home/"+user+"/.ranking.txt", "w")
-                texto=texto+sentence+"\n"
-                arq.write(texto)
-                arq.close()
+                teste=True
+                for i in range(len(texto)):
+                    if texto[i].split(";")[0].split("=")[1] == sentence.split(";")[0].split("=")[1]:
+                        if texto[i].split(";")[1].split("=")[1] < sentence.split(";")[1].split("=")[1]:
+                            teste=False
+                        else:
+                            texto.remove(texto[i])
+                            teste=True
+                if teste:
+                    arq = open("/home/"+user+"/.ranking.txt", "w")
+                    texto.append(sentence+"\n")
+                    for i in texto:
+                        arq.write(i)
+                    arq.close()
             elif sentence == "acabou":
                 user=getpass.getuser()
                 arq = open("/home/"+user+"/.ranking.txt", "r")
@@ -120,7 +134,6 @@ class servidor():
                     self.usuarios[num].send(texto)
                 arq.close()
             else:
-                print "mensagem que recebe",sentence
                 num = self.usuarios.index(connectionSocket)
                 if len(sentence) > 3:
                     for i in range(0,len(sentence),3):
@@ -130,7 +143,6 @@ class servidor():
                         else:
                             self.usuarios[num-1].send(texto)
                 else:
-                    print "mensagem",sentence
                     if (num % 2) == 0:
                         self.usuarios[num+1].send(sentence)
                     else:

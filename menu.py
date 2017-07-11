@@ -38,10 +38,9 @@ class Carregamento(Frame):
 				self.num = 0
 	def conexao(self):
 		if self.op == 1:
-			self.cli = cliente('52.67.11.161')
+			self.cli = cliente('54.207.57.244')
 			self.cli.enviar("entrei")
 			resposta = self.cli.receber()
-			print resposta
 			if resposta == "True":
 				self.destroy()
 				self.cli.enviar("sorteio")
@@ -58,7 +57,6 @@ class Carregamento(Frame):
 			self.cli = cliente(ip)
 			self.cli.enviar("entrei")
 			resposta = self.cli.receber()
-			print resposta
 			if resposta == "True":
 				self.destroy()
 				self.cli.enviar("sorteio")

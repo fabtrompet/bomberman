@@ -99,7 +99,6 @@ class Bomberman(Frame):
 		testeeeeee=[]
 		while 1:
 			resposta = self.cli.receber()
-			print "to recebendo",resposta
 			columns=2
 			if resposta[:4] == "nick":
 				ranking=resposta.split("\n")
@@ -109,8 +108,7 @@ class Bomberman(Frame):
 						ranking2.append("tempo="+ranking[i].split(";")[1].split("=")[1]+";nick="+ranking[i].split(";")[0].split("=")[1])
 					else:
 						ranking2.append(ranking[0])
-				ranking2.sort()
-				print ranking2	
+				ranking2.sort()	
 				toplevel = Toplevel(bg="black")
 				toplevel.title("Ranking")
 				widgets=[]
@@ -123,7 +121,6 @@ class Bomberman(Frame):
 							numteste=0
 						if row == 0 and vasf == 1:
 							numteste=1
-						print numteste
 						label = Label(toplevel,borderwidth=2,width=20,text=ranking2[row].split(";")[numteste].split("=")[1])
 						label.configure(bg="gray")
 						label.grid(row=row, column=column, sticky="nsew",padx=1, pady=1)
@@ -139,7 +136,6 @@ class Bomberman(Frame):
 					for i in range(0,len(x),3):
 						texto=x[i:i+3]
 						resposta2=texto
-						print "executando",resposta2
 						if resposta2 == "000": #000
 							self.play2.baixo("baixo")
 						elif resposta2 == "001": #001
@@ -152,7 +148,6 @@ class Bomberman(Frame):
 							self.play2.bomba("bomba")
 					testeeeeee.remove(x)
 			else:
-				print "executando",resposta
 				if resposta == "000": #000
 					self.play2.baixo("baixo")
 				elif resposta == "001": #001
@@ -179,6 +174,7 @@ class player():
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
+				self.master.update()
 				self.lastx=self.img.winfo_x()
 				self.lasty=self.img.winfo_y()
 			else:
@@ -186,14 +182,16 @@ class player():
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=416,y=416)
+				self.master.update()
 				self.lastx=self.img.winfo_x()
-				self.lasty=self.img.winfo_y()				
+				self.lasty=self.img.winfo_y()		
 		else:
 			if check == None:
 				self.img2 = ImageTk.PhotoImage(Image.open('/usr/bin/play23.gif'))
 				self.img = Label(self.master, bg="green",image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=416,y=416)
+				self.master.update()
 				self.lastx=self.img.winfo_x()
 				self.lasty=self.img.winfo_y()
 			else:
@@ -201,6 +199,7 @@ class player():
 				self.img = Label(self.master, bg="green", image=self.img2)
 				self.img.image=self.img2
 				self.img.place(x=32,y=32)
+				self.master.update()
 				self.lastx=self.img.winfo_x()
 				self.lasty=self.img.winfo_y()
 		if check == None:
@@ -573,7 +572,7 @@ class player():
 								return "morreu1"
 							else:
 								return "morreu2"
-							print "pegou fogo"
+							
 						return True
 			elif caminho == "y":
 				for i in range(32,417,64):
@@ -586,10 +585,9 @@ class player():
 								return "morreu1"
 							else:
 								return "morreu2"
-							print "pegou fogo"
+							
 						return True
 			elif caminho == "parado":
-				print teste2+1,teste+1
 				if self.master._widgets[teste2+1][teste+1] in self.master.fogo:
 					#self.img.destroy()
 					if self.master.sou == "primeiro" and self.outro == None:
@@ -598,6 +596,5 @@ class player():
 						return "morreu1"
 					else:
 						return "morreu2"
-					print "pegou fogo"
 		else:
 			return True
