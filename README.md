@@ -6,5 +6,6 @@ O controle do personagem é pelas direcionais do teclado e para soltar a bomba u
 
 Obs: O jogo ainda contém erros. Exemplos (não colocar nick, ou colocar nick com caracteres especiais).
 
-Autores: Ana Lucia Lima ana.ufc@outlook.com\n
-         Fabio Correia Lopes correiafabio063@gmail.com
+Autores: 
+Ana Lucia Lima ana.ufc@outlook.com
+Fabio Correia Lopes correiafabio063@gmail.com
