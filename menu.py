@@ -1,5 +1,5 @@
 import threading
-from Tkinter import *
+from tkinter import *
 import os
 from broadcast_client import *
 from tcp_server_local import *

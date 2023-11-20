@@ -1,4 +1,4 @@
-import thread
+import threading
 from random import randint
 from broadcast_server import *
 from socket import *
@@ -47,7 +47,8 @@ class servidor():
     def receber(self,connectionSocket, addr):
         while 1:
             sentence = connectionSocket.recv(1024)
-            #print sentence
+            sentence = sentence.decode('utf-8')
+            print(sentence)
             if sentence == "quemjoga":
                 time.sleep(randint(1,5))
                 self.quemjoga(connectionSocket)
@@ -149,16 +150,18 @@ class servidor():
                         self.usuarios[num-1].send(sentence)
 
         connectionSocket.close()
-        thread.exit()
+        #thread.exit()
     def udpserver(self, nada):
         udpserver()
     def loop(self):
         while 1:
             try:
-                thread.start_new_thread(self.udpserver, tuple([""]))
+                threading.Thread(target=self.udpserver, args=(tuple([""]))).start()
                 connectionSocket, addr = self.serverSocket.accept()
-                thread.start_new_thread(self.receber, tuple([connectionSocket, addr]))
-            except:
-                thread.exit()
+                threading.Thread(target=self.receber, args=(tuple([connectionSocket, addr]))).start()
+            except Exception as e:
+                print(e)
+                break
+                #thread.exit()
                 self.serverSocket.close()
 

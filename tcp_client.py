@@ -7,7 +7,7 @@ class cliente():
         self.clientSocket = socket(AF_INET, SOCK_STREAM)
         self.clientSocket.connect((self.serverName,self.serverPort))
     def enviar(self, string):
-        self.clientSocket.send(string)
+        self.clientSocket.send(string.encode('utf-8'))
     def receber(self):
         resposta = self.clientSocket.recv(1024)
         return resposta
