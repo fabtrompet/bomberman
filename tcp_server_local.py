@@ -17,20 +17,22 @@ class servidor():
 
     def tudocerto(self):
         if ((len(self.usuarios)) % 2 == 0):
-            self.usuarios[len(self.usuarios)-1].send("True")
-            self.usuarios[len(self.usuarios)-2].send("True")
+            self.usuarios[len(self.usuarios)-1].send("True".encode('utf-8'))
+            self.usuarios[len(self.usuarios)-2].send("True".encode('utf-8'))
     def play(self, conect):
         self.numeros = []
         numeros2 = self.sortea()
+        print(self.usuarios)
         num = self.usuarios.index(conect)
-        if (num % 2) == 0:
-            self.usuarios[num+1].send(numeros2)
-            self.usuarios[num].send(numeros2)
+        print(num, numeros2)
+        if ((num+1) % 2) == 0:
+            self.usuarios[num-1].send(numeros2.encode('utf-8'))
+            self.usuarios[num].send(numeros2.encode('utf-8'))
     def quemjoga(self, conect):
         num = self.usuarios.index(conect)
         if (num % 2) == 0:
-            self.usuarios[num+1].send("segundo")
-            self.usuarios[num].send("primeiro")
+            self.usuarios[num+1].send("segundo".encode('utf-8'))
+            self.usuarios[num].send("primeiro".encode('utf-8'))
     def sortea(self):
         string = ""
         especialbomba=randint(0,133)
@@ -55,9 +57,9 @@ class servidor():
             elif sentence == "jogar":
                 num = self.usuarios.index(connectionSocket)
                 if (num % 2) == 0:
-                    self.usuarios[num+1].send("true")
+                    self.usuarios[num+1].send("true".encode('utf-8'))
                 else:
-                    self.usuarios[num-1].send("true")
+                    self.usuarios[num-1].send("true".encode('utf-8'))
             elif sentence == "entrei":
                 self.usuarios.append(connectionSocket)
                 self.tudocerto()
@@ -68,29 +70,29 @@ class servidor():
                     num = self.usuarios.index(connectionSocket)
                     if (num % 2) == 0:
                         try:
-                            self.usuarios[num+1].send("desconectado")
+                            self.usuarios[num+1].send("desconectado".encode('utf-8'))
                             self.usuarios[num+1].close()
                             self.usuarios.remove(self.usuarios[num+1])
                             self.usuarios.remove(connectionSocket)
                             connectionSocket.close()
-                            thread.exit()
+                            
                         except Exception as e:
                             self.usuarios.remove(connectionSocket)
                             connectionSocket.close()
-                            thread.exit()
+                            
                         
                     else:
                         try:
-                            self.usuarios[num-1].send("desconectado")
+                            self.usuarios[num-1].send("desconectado".encode('utf-8'))
                             self.usuarios[num-1].close()
                             self.usuarios.remove(self.usuarios[num-1])
                             self.usuarios.remove(connectionSocket)
                             connectionSocket.close()
-                            thread.exit()
+                            
                         except Exception as e:
                             self.usuarios.remove(connectionSocket)
                             connectionSocket.close()
-                            thread.exit()
+                            
                 except Exception as e:
                     raise e
             elif sentence[:4] == "nick":
@@ -150,7 +152,7 @@ class servidor():
                         self.usuarios[num-1].send(sentence)
 
         connectionSocket.close()
-        #thread.exit()
+        #
     def udpserver(self, nada):
         udpserver()
     def loop(self):
@@ -162,6 +164,6 @@ class servidor():
             except Exception as e:
                 print(e)
                 break
-                #thread.exit()
+                #
                 self.serverSocket.close()
 

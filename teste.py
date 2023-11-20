@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import Tkinter as tk
-from Tkinter import *
+import tkinter as tk
+from tkinter import *
 from PIL import Image, ImageTk
 import threading
 import os
@@ -90,6 +90,7 @@ class Bomberman(Frame):
 	def conexao(self):
 		self.cli.enviar("quemjoga")
 		teste = self.cli.receber()
+		teste = teste.decode('utf-8')
 		self.sou = teste
 		#texto = "Você joga por "+teste
 		#toplevel = Toplevel()
@@ -99,6 +100,7 @@ class Bomberman(Frame):
 		testeeeeee=[]
 		while 1:
 			resposta = self.cli.receber()
+			resposta = resposta.decode('utf-8')
 			columns=2
 			if resposta[:4] == "nick":
 				ranking=resposta.split("\n")
