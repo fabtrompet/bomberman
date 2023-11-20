@@ -29,7 +29,7 @@ class Carregamento(Frame):
 		while True:
 			try:
 				time.sleep(0.04)
-				img = PhotoImage(file="/usr/bin/radio.gif", format="gif - {}".format(self.num))
+				img = PhotoImage(file="radio.gif", format="gif - {}".format(self.num))
 				self.label.config(image=img)
 				self.label.image=img
 			
@@ -70,7 +70,7 @@ class Carregamento(Frame):
 				#t1 = threading.Thread(target=app.conexao, args=[self.cli])
 				#t1.start()
 				app.master.title("Bomberman")
-				app.master.geometry("1480x1480+1600+1100")
+				app.master.geometry("450x240+600+100")
 				app.master.resizable(True, True)
 	def close(self):
 		os._exit(0)

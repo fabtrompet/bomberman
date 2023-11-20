@@ -30,8 +30,8 @@ class servidor():
             self.usuarios[num].send(numeros2.encode('utf-8'))
     def quemjoga(self, conect):
         num = self.usuarios.index(conect)
-        if (num % 2) == 0:
-            self.usuarios[num+1].send("segundo".encode('utf-8'))
+        if ((num+1) % 2) == 0:
+            self.usuarios[num-1].send("segundo".encode('utf-8'))
             self.usuarios[num].send("primeiro".encode('utf-8'))
     def sortea(self):
         string = ""
@@ -130,26 +130,27 @@ class servidor():
                 texto = arq.read()
                 num = self.usuarios.index(connectionSocket)
                 if (num % 2) == 0:
-                    self.usuarios[num+1].send(texto)
-                    self.usuarios[num].send(texto)
+                    self.usuarios[num+1].send(texto.encode('utf-8'))
+                    self.usuarios[num].send(texto.encode('utf-8'))
                 else:
                     self.usuarios[num-1].send(texto)
                     self.usuarios[num].send(texto)
                 arq.close()
             else:
                 num = self.usuarios.index(connectionSocket)
+                num+=1
                 if len(sentence) > 3:
                     for i in range(0,len(sentence),3):
                         texto=sentence[i:i+3]
                         if (num % 2) == 0:
-                            self.usuarios[num+1].send(texto)
+                            self.usuarios[num+1].send(texto.encode('utf-8'))
                         else:
-                            self.usuarios[num-1].send(texto)
+                            self.usuarios[num-1].send(texto.encode('utf-8'))
                 else:
                     if (num % 2) == 0:
-                        self.usuarios[num+1].send(sentence)
+                        self.usuarios[num+1].send(sentence.encode('utf-8'))
                     else:
-                        self.usuarios[num-1].send(sentence)
+                        self.usuarios[num-1].send(sentence.encode('utf-8'))
 
         connectionSocket.close()
         #
